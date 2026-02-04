@@ -60,7 +60,7 @@ def object_watch_clear(request):
              permission='watch_user_or_object')
 def object_watch_list(request):
     try:
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         objects = DBSession.query(Watched_Objects).filter(
             Watched_Objects.authorid == userid).all()
     except DBAPIError:
@@ -74,7 +74,7 @@ def object_watch_list(request):
              permission='edit_user_or_object')
 def object_watch_add(request):
     if request.method == 'POST':
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         if userid:
             user = DBSession.query(User).get(userid)
             objectToAdd = Watched_Objects(author=user.username,
@@ -98,7 +98,7 @@ def object_watch_add(request):
 @view_config(route_name='object_watch_edit', renderer='osmhm_site:templates/object_watch_list_add.mako',
              permission='edit_user_or_object')
 def object_watch_edit(request):
-    userid = authenticated_userid(request)
+    userid = request.authenticated_userid
     if userid:
         entry = DBSession.query(Watched_Objects).get(request.matchdict['id'])
         if int(userid) != entry.authorid:
@@ -124,7 +124,7 @@ def object_watch_edit(request):
 @view_config(route_name='object_watch_delete',
              permission='edit_user_or_object')
 def object_watch_delete(request):
-    userid = authenticated_userid(request)
+    userid = request.authenticated_userid
 
     objectToDelete = DBSession.query(
         Watched_Objects).get(request.matchdict['id'])

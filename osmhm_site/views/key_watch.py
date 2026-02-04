@@ -97,7 +97,7 @@ def key_watch_clear(request):
              permission='watch_user_or_object')
 def key_watch_list(request):
     try:
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         keys = DBSession.query(Watched_Keys).filter(
             Watched_Keys.authorid == userid).all()
     except DBAPIError:
@@ -111,7 +111,7 @@ def key_watch_list(request):
              permission='edit_user_or_object')
 def key_watch_add(request):
     if request.method == 'POST':
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         if userid:
             user = DBSession.query(User).get(userid)
             keyToAdd = Watched_Keys(author=user.username,
@@ -134,7 +134,7 @@ def key_watch_add(request):
 @view_config(route_name='key_watch_edit', renderer='osmhm_site:templates/key_watch_list_add.mako',
              permission='edit_user_or_object')
 def key_watch_edit(request):
-    userid = authenticated_userid(request)
+    userid = request.authenticated_userid
     if userid:
         entry = DBSession.query(Watched_Keys).get(request.matchdict['id'])
         if int(userid) != entry.authorid:
@@ -160,7 +160,7 @@ def key_watch_edit(request):
 
 @view_config(route_name='key_watch_delete', permission='edit_user_or_object')
 def key_watch_delete(request):
-    userid = authenticated_userid(request)
+    userid = request.authenticated_userid
 
     keyToDelete = DBSession.query(Watched_Keys).get(request.matchdict['id'])
     if int(keyToDelete.authorid) == int(userid):

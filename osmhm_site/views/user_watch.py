@@ -53,16 +53,16 @@ def user_watch_event_delete(request):
              permission='watch_user_or_object')
 def user_watch_list(request):
     try:
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         users = DBSession.query(Watched_Users).filter(
             Watched_Users.authorid == userid).all()
     except BaseException:
         print('Sorry')
-# except DBAPIError:
-# print 'Sorry'
-#        users = None
-# if not users:
-# users = None
+    except DBAPIError:
+        print('Sorry')
+        users = None
+    if not users:
+        users = None
 
     return dict(page_id='user_watch_list', users=users)
 
