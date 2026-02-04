@@ -5,10 +5,9 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.httpexceptions import HTTPFound
 
-from .models import (
-    DBSession,
-    Base,
-)
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+from osmhm_site.models import DBSession, Base, User
 
 from .security import (
     RootFactory,
@@ -25,7 +24,7 @@ def main(global_config, **settings):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
-
+    
     authn_policy = AuthTktAuthenticationPolicy(
         secret='super_secret',
         callback=group_membership)
@@ -40,8 +39,8 @@ def main(global_config, **settings):
     config.set_session_factory(session_factory)
 
     config.include('pyramid_mako')
-    config.add_static_view('static', 'static', cache_max_age=3600)
 
+    config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('home', '/')
 
     config.add_route('history', '/history')
@@ -88,4 +87,7 @@ def main(global_config, **settings):
     config.add_route('admin_clear_history', '/admin/clear_history',request_method="DELETE")
 
     config.scan()
-    return config.make_wsgi_app()
+    app = config.make_wsgi_app()
+    app = ProxyFix(app, x_proto = 1, x_host = 1)
+
+    return app
