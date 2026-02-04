@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OpenStreetMap Hall Monitor</title>
 
-    <script src="${request.static_url('osmhm_site:static/js/jquery-1.11.3.min.js')}"></script>
-    <script src="${request.static_url('osmhm_site:static/twbs/js/bootstrap.min.js')}"></script>
+    <script src="${request.static_url('osmhm_site:static/js/jquery-1.11.3.min.js', _scheme='https')}"></script>
+    <script src="${request.static_url('osmhm_site:static/twbs/js/bootstrap.min.js', _scheme='https')}"></script>
 
-	<link href="${request.static_url('osmhm_site:static/twbs/css/bootstrap.css')}" rel="stylesheet">
-	<link href="${request.static_url('osmhm_site:static/css/dashboard.css')}" rel="stylesheet">
+	<link href="${request.static_url('osmhm_site:static/twbs/css/bootstrap.css', _scheme='https')}" rel="stylesheet">
+	<link href="${request.static_url('osmhm_site:static/css/dashboard.css', _scheme='https')}" rel="stylesheet">
 
     </head>
     <body>
@@ -50,28 +50,28 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar" style="margin-left: 0px !important;">
-	    % if page_id is ('user_watch' or 'user_watch_add'):
+	    % if page_id in ('user_watch' or 'user_watch_add'):
             <li><a href="${request.route_path('user_watch_list')}">Users on list</a></li>
             <li><a href="${request.route_path('user_watch_add')}">Add a user</a></li>
-            % elif page_id is 'user_watch_list':
+            % elif page_id == 'user_watch_list':
 	    <li><a href="${request.route_path('user_watch')}">Return to user activity</a></li>
             <li><a href="${request.route_path('user_watch_add')}">Add a user</a></li>
-	    % elif page_id is ('object_watch' or 'object_watch_add'):
+	    % elif page_id in ('object_watch' or 'object_watch_add'):
             <li><a href="${request.route_path('object_watch_list')}">Objects on list</a></li>
             <li><a href="${request.route_path('object_watch_add')}">Add an object</a></li>
-            % elif page_id is 'object_watch_list':
+            % elif page_id in 'object_watch_list':
             <li><a href="${request.route_path('object_watch')}">Return to object activity</a></li>
             <li><a href="${request.route_path('object_watch_add')}">Add an object</a></li>
-            % elif page_id is ('key_watch' or 'key_watch_add'):
+            % elif page_id in ('key_watch' or 'key_watch_add'):
             <li><a href="${request.route_path('key_watch_list')}">Tags on list</a></li>
             <li><a href="${request.route_path('key_watch_add')}">Add a tag</a></li>
             <li><a href="${request.route_path('key_watch_clear')}">Clear this log</a></li>
-            % elif page_id is 'key_watch_list':
+            % elif page_id == 'key_watch_list':
             <li><a href="${request.route_path('key_watch')}">Return to tag activity</a></li>
             <li><a href="${request.route_path('key_watch_add')}">Add a tag</a></li>
-            % elif page_id is 'watch_whitelist':
+            % elif page_id == 'watch_whitelist':
             <li><a href="${request.route_path('watch_whitelist_add')}">Add a whitelisted user</a></li>
-			% elif page_id is 'watch':
+	    % elif page_id == 'watch':
 			<li>Flags:</li>
 			<li>1: Added > 1500 objects</li>
             <li>2: Modified > 1500 objects</li>
