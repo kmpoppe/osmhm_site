@@ -1,4 +1,4 @@
-from pyramid.security import authenticated_userid
+# from pyramid.security import authenticated_userid
 from .models import (
     DBSession,
     User,
@@ -14,7 +14,7 @@ from pyramid.events import (
 def add_global(event):
     request = event.get('request')
 
-    user_id = authenticated_userid(request)
+    user_id = request.authenticated_userid
     if user_id is not None:
         event['user'] = DBSession.query(User).get(user_id)
 

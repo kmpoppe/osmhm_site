@@ -12,7 +12,8 @@ from pyramid.security import (
     forget,
 )
 
-import urlparse
+# import urlparse
+from urllib.parse import parse_qsl
 import oauth2 as oauth
 
 CONSUMER_KEY = 'IMjqoNHVuMaGOkIggHhasrqg08GcXULWtMjs742i'

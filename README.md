@@ -6,10 +6,17 @@ Introduction
 
 This is a frontend for use with the [OSM Hall Monitor](https://github.com/ethan-nelson/osm_hall_monitor) monitoring package. Rather than using a command line to add things to track or to view log events, the website provides the ability to add any trackable things, review log events, and support restrictions to this data via OSM authentication. 
 
+Requirements
+------------
+
+- python3 (obviously)
+
+- python3-virtualenv (recommended)
+
+- libpq-dev (otherwise psycopg2 build will fail during setup)
+
 Installing
 ----------
-
-Note: Python is required and virtualenv is _strongly_ recommended..
 
 - cd osmhm_site
 

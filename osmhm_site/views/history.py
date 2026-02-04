@@ -1,7 +1,7 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPUnauthorized
-from pyramid.security import authenticated_userid
+# from pyramid.security import authenticated_userid
 
 from pyramid.url import route_path
 from pyramid.httpexceptions import (
@@ -27,7 +27,7 @@ def watch(request):
 		history = DBSession.query(History).order_by(desc(History.changeset)).all()
 		filetime = DBSession.query(File_List).first()
 	except DBAPIError:
-		print 'Sorry'
+		print('Sorry')
 	if not history:
 		history = None
 	return dict(page_id='history', history=history, update_time=filetime.timestamp)

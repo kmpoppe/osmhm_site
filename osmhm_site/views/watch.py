@@ -1,7 +1,7 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPUnauthorized
-from pyramid.security import authenticated_userid
+# from pyramid.security import authenticated_userid
 
 from pyramid.url import route_path
 from pyramid.httpexceptions import (
@@ -29,7 +29,7 @@ def watch(request):
 		history = DBSession.query(History_Filters).order_by(desc(History_Filters.changeset)).all()
 		filetime = DBSession.query(File_List).first()
 	except DBAPIError:
-		print 'Sorry'
+		print('Sorry')
 	if not history:
 		history = None
 	return dict(page_id='watch', history=history, update_time=filetime.timestamp)
@@ -47,7 +47,7 @@ def watch_whitelist(request):
     try:
         users = DBSession.query(Whitelisted_Users).all()
     except DBAPIError:
-        print 'Sorry'
+        print('Sorry')
     if not users:
         users = None
     return dict(page_id='watch_whitelist', users=users)
@@ -55,7 +55,7 @@ def watch_whitelist(request):
 @view_config(route_name='watch_whitelist_add', renderer='osmhm_site:templates/admin_whitelist_add.mako', permission='edit_user_or_object')
 def watch_whitelist_add(request):
     if request.method == 'POST':
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         if userid:
             user = DBSession.query(User).get(userid)
             userToAdd = Whitelisted_Users(author=user.username,
