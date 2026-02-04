@@ -15,12 +15,16 @@ Requirements
 
 - libpq-dev (otherwise psycopg2 build will fail during setup)
 
+- requests-oauthlib (for OAuth2)
+
 Installing
 ----------
 
 - cd osmhm_site
 
 - virtualenv env
+
+- env/bin/pip install requests-oauthlib
 
 - env/bin/python setup.py develop
 
