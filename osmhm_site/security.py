@@ -2,22 +2,15 @@ from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
 )
-# from zope.sqlalchemy import ZopeTransactionExtension
 from zope.sqlalchemy import register
 
-from .models import (
-    User,
-)
+from osmhm_site.models import DBSession, Base, User
 
 from pyramid.security import (
     Allow,
     Everyone,
     Deny,
 )
-
-# DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
-DBSession = scoped_session(sessionmaker())
-register(DBSession)
 
 class RootFactory(object):
     __acl__ = [
