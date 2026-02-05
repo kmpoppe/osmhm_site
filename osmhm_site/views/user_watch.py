@@ -73,7 +73,7 @@ def user_watch_list(request):
 def user_watch_add(request):
 
     if request.method == 'POST':
-        userid = authenticated_userid(request)
+        userid = request.authenticated_userid
         if userid:
             user = DBSession.query(User).get(userid)
             userToAdd = Watched_Users(author=user.username,
@@ -96,7 +96,7 @@ def user_watch_add(request):
 @view_config(route_name='user_watch_edit', renderer='osmhm_site:templates/user_watch_list_add.mako',
              permission='edit_user_or_object')
 def user_watch_edit(request):
-    userid = authenticated_userid(request)
+    userid = request.authenticated_userid
     if userid:
         entry = DBSession.query(Watched_Users).get(request.matchdict['id'])
         if int(userid) != entry.authorid:
@@ -121,7 +121,7 @@ def user_watch_edit(request):
 
 @view_config(route_name='user_watch_delete', permission='edit_user_or_object')
 def user_watch_delete(request):
-    userid = authenticated_userid(request)
+    userid = request.authenticated_userid
 
     userToDelete = DBSession.query(Watched_Users).get(request.matchdict['id'])
     if int(userToDelete.authorid) == int(userid):
