@@ -65,12 +65,13 @@ def key_watch(request):
             event.changesets = changeset_strs[event.username][event.key][event.value]
 
         filetime = DBSession.query(File_List).first()
+        update_time = filetime.timestamp if filetime is not None else None
     except DBAPIError:
         print('Sorry')
     if not history:
         history = None
     return dict(page_id='key_watch', history=history,
-                update_time=filetime.timestamp)
+                update_time=update_time)
 
 
 @view_config(route_name='key_watch_event_delete',
