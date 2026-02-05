@@ -26,6 +26,8 @@ Installing
 
 - env/bin/pip install requests-oauthlib
 
+- env/bin/pip install setuptools
+
 - env/bin/python setup.py develop
 
 - env/bin/initialize_osmhm_db development.ini
